@@ -1,38 +1,17 @@
 #include <iostream>
 #include <stdlib.h>
 #include "headers.h"
+#include "decoration.h"
 using namespace std;
 
-void loading()
-{
-    system("cls");
-    cout << "___________   _______________________________________^__" << endl;
-    cout << " ___   ___ |||  ___   ___   ___    ___ ___  |   __  ,----\\" << endl;
-    cout << "|   | |   |||| |   | |   | |   |  |   |   | |  |  | |_____\\" << endl;
-    cout << "|___| |___|||| |___| |___| |___|  | O | O | |  |  |        \\" << endl;
-    cout << "           |||                    |___|___| |  |__|         )" << endl;
-    cout << "___________|||______________________________|______________/" << endl;
-    cout << "           |||                                        /--------" << endl;
-    cout << "-----------'''---------------------------------------'" << endl;
-}
-
-void printHeader()
-{
-    system("cls");
-    cout << "-------------------------------------------------------------------------" << endl;
-    cout << "                  -----TRAIN BOOKING TICKET SERVICE----- " << endl;
-    cout << "-------------------------------------------------------------------------" << endl;
-    cout << "" << endl;
-}
 int main()
 {   
     loading();
     system("pause");
     printHeader();
 
-    cout << "Welcome to the Train Booking Ticket Service!\n"
-         << endl;
-
+    cout << "Welcome to the Train Booking Ticket Service!\n"<< endl;
+    bool flag = false;
     int choice;
     cout << "\n";
     cout << "1. Create new account\t";
@@ -56,10 +35,34 @@ switch(choice){
             if(auth.Login()){
                 cout<<"Login successfull"<<endl;
                 system("pause");
-                system("Adminlogin.exe");
-
+                flag=true;
             }
             break;
     }
+
+if(flag){
+    MainMenu();
+    int choice;
+    cin>>choice;
+    switch(choice){
+        case 1:
+            system("Insertrailway.exe");
+            break;
+        case 2:
+            system("Readrailway.exe");
+            break;
+        case 3:
+            system("Searchbytrainno.exe");
+            break;
+        case 4:
+            system("Updatetrain.exe");
+            break;
+        case 5:
+            system("Deletetrain.exe");
+            break;
+        case 0:
+            exit(0);
+            }
+        }
         return 0;
 }
