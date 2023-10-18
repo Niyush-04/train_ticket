@@ -1,5 +1,6 @@
 #include <iostream>
 #include <stdlib.h>
+#include "headers.h"
 using namespace std;
 
 void loading()
@@ -23,64 +24,42 @@ void printHeader()
     cout << "-------------------------------------------------------------------------" << endl;
     cout << "" << endl;
 }
-
-int adminLogin()
-{
-retry:
-    string login, pass;
-    string loginname = "admin";
-    string loginpass = "admin123";
-    cout << "\n-------------------------------------------------------------------------" << endl;
-    cout << "----------------------------------ADMIN----------------------------------\n"
-         << endl;
-    cout << "Enter your LoginID : ";
-    cin >> login;
-    cout << "\nEnter Password : ";
-    cin >> pass;
-    if (loginname == login && loginpass == pass)
-    {
-        system("Adminlogin.exe");
-    }
-    else
-    {
-        cout << "Given LoginID or Password is incorrect. Please try again !!" << endl;
-        system("pause");
-
-        goto retry;
-    }
-}
-
-void userlogin()
-{
-    cout << "coming soon !! ";
-}
-
 int main()
-{
+{   
     loading();
     system("pause");
     printHeader();
 
     cout << "Welcome to the Train Booking Ticket Service!\n"
          << endl;
-    cout << "You are a Admin/user:" << endl;
 
     int choice;
     cout << "\n";
-    cout << "1. ADMIN\t";
-    cout << "2. USER\t\t";
-    cout << "0. EXIT\n"
-         << endl;
+    cout << "1. Create new account\t";
+    cout << "2. Login existing account\t\t";
+    cout << "0. EXIT\n"<< endl;
     cout << "Input: ";
     cin >> choice;
-    if (choice == 1)
-    {
-        adminLogin();
+    
+    Auth auth;
+switch(choice){
+        case 1:
+        cout<<"SIGNUP"<<endl;
+			if(auth.signup()){
+				cout<<"Your account has been created successfully"<<endl;
+				system("pause");
+			}
+			break;
+        case 2:
+        cout<<"LOGIN"<<endl;
+        
+            if(auth.Login()){
+                cout<<"Login successfull"<<endl;
+                system("pause");
+                system("Adminlogin.exe");
+
+            }
+            break;
     }
-    else if (choice == 2)
-    {
-        userlogin();
-    }
-    else
         return 0;
 }
