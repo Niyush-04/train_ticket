@@ -3,18 +3,10 @@
 #include <string>
 using namespace std;
 
-struct Operations
-{
-    string route;
-    string timing;
-    string fare;
-};
-
 class TrainManagement
 {
 private:
-    string trainNumber, numberOfSeats;
-    Operations operation;
+    string trainNumber, numberOfSeats, route, timing, fare;
     ofstream trainIn;
     ifstream trainOut;
     void trainData()
@@ -22,9 +14,9 @@ private:
         trainIn.open("TrainFile.txt", ios::in | ios::app);
         trainIn << "Train number: " << trainNumber << endl;
         trainIn << "Number of seats: " << numberOfSeats << endl;
-        trainIn << "Route: " << operation.route << endl;
-        trainIn << "Timing: " << operation.timing << endl;
-        trainIn << "Fare: " << operation.fare << endl;
+        trainIn << "Route: " << route << endl;
+        trainIn << "Timing: " << timing << endl;
+        trainIn << "Fare: " << fare << endl;
         trainIn << "__________________________" << endl;
         trainIn.close();
     }
@@ -34,14 +26,19 @@ public:
     {
         cout << "Enter train number: ";
         cin >> trainNumber;
+
+        cin.ignore(); // Ignore the newline character
         cout << "Enter route: ";
-        cin >> operation.route;
+        getline(cin, route); 
+
+        cout << "Enter timings: ";
+        cin >> timing;
+        
         cout << "Enter number of seats: ";
         cin >> numberOfSeats;
-        cout << "Enter timings: ";
-        cin >> operation.timing;
+        
         cout << "Enter fare: ";
-        cin >> operation.fare;
+        cin >> fare;
         trainData();
     }
     void viewTrains()
@@ -50,38 +47,42 @@ public:
         string x;
         while (getline(trainOut, x))
         {
-            cout << "\t\t\t" << x << endl;
+            cout<< x << endl;
         }
         trainOut.close();
     }
-    void searchTrain()
+void searchTrain()
+{
+retry1:
+    trainOut.open("TrainFile.txt", ios::in);
+    string search;
+    cout << "Enter train number: ";
+    cin >> search;
+    string y;
+    bool found = false;
+
+    while (getline(trainOut, y))
     {
-        retry1:
-        trainOut.open("TrainFile.txt", ios::out);
-        string search;
-        cout << "Enter train number: ";
-        cin >> search;
-        string y;
-        while (getline(trainOut, y))
+        if (y == ("Train number: " + search))
         {
-            if (y == ("Train number: " + search))
+            found = true;
+            while (getline(trainOut, y))
             {
-                while (getline(trainOut, y))
-                {
-                    cout << y << endl;
-                    if (y == "__________________________")
-                        break;
-                }
-            }
-            else
-            {
-                cout << "Train not found" << endl;
-                trainOut.close();
-                goto retry1;
+                cout << y << endl;
+                if (y == "__________________________")
+                    break;
             }
         }
-        trainOut.close();
     }
+
+    trainOut.close();
+
+    if (!found)
+    {
+        cout << "Train not found" << endl;
+        goto retry1;
+    }
+}
     void deleteTrain()
     {
         ifstream trainIn("TrainFile.txt");

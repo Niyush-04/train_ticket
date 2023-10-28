@@ -45,7 +45,7 @@ int main()
             break;
         case 2:
             cout << "LOGIN" << endl;
-            retry1:
+        retry1:
             if (auth.Login(1))
             {
                 cout << "Login successfull" << endl;
@@ -85,7 +85,7 @@ int main()
             break;
         case 2:
             cout << "LOGIN" << endl;
-            retry2:
+        retry2:
             if (auth.Login(2))
             {
                 cout << "Login successfull" << endl;
@@ -102,17 +102,27 @@ int main()
         }
     }
 
+    char option;
     if (flag == "admin")
     {
         TrainManagement tm;
-        retry3:
+    retry3:
         adminMenu();
         int choice;
         cin >> choice;
         switch (choice)
         {
         case 1:
+        retry4:
             tm.addNewTrain();
+            cout << "Do you want to add more?(y/n)";
+            cin >> option;
+            if (option == 'y' || option == 'Y')
+            {
+                goto retry4;
+            }
+            else
+                goto retry3;
             break;
         case 2:
             tm.viewTrains();
@@ -123,11 +133,20 @@ int main()
             tm.searchTrain();
             break;
         case 4:
-            cout<<"coming soon";
+            cout << "coming soon";
             system("pause");
             break;
         case 5:
+        retry5:
             tm.deleteTrain();
+                        cout << "Do you want to delete more?(y/n)";
+            cin >> option;
+            if (option == 'y' || option == 'Y')
+            {
+                goto retry5;
+            }
+            else
+                goto retry3;
             break;
         case 0:
             exit(0);
