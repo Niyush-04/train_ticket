@@ -86,4 +86,38 @@ public:
     }
 };
 
+void processUserChoice(int userType) {
+    Auth auth;
+    int choice;
+    cout << "\n";
+    cout << "1. Create new account\t";
+    cout << "2. Login existing account\t\t";
+    cout << "0. EXIT\n" << endl;
+    cout << "Input: ";
+    cin >> choice;
+
+    switch (choice) {
+        case 1:
+            cout << "SIGNUP" << endl;
+            if (auth.signup(userType)) {
+                cout << "Your account has been created successfully" << endl;
+                system("pause");
+            }
+            break;
+        case 2:
+            cout << "LOGIN" << endl;
+            string flag = (userType == 1) ? "admin" : "user";
+            retryLogin:
+            if (auth.Login(userType)) {
+                cout << "Login successful" << endl;
+                system("pause");
+                flag = (userType == 1) ? "admin" : "user";
+            } else {
+                cout << "Login failed" << endl;
+                system("pause");
+                goto retryLogin;
+            }
+            break;
+    }
+}
 

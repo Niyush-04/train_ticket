@@ -1,14 +1,12 @@
-#include <iostream>
-#include <stdlib.h>
 #include "source/headers.h"
 #include "source/Administration.h"
 #include "source/decoration.h"
-using namespace std;
+#include "source/ticketBooking.h"
 
 int main()
 {
     loading();
-    system("pause");
+    system("pause"); 
     printHeader();
 
     cout << "Welcome to the Train Booking Ticket Service!\n"
@@ -20,86 +18,12 @@ int main()
     cout << "2.User\n";
     cin >> userchoice;
 
-    Auth auth;
-    // login for admin
-    if (userchoice == 1)
-    {
-        int choice;
-        cout << "\n";
-        cout << "1. Create new account\t";
-        cout << "2. Login existing account\t\t";
-        cout << "0. EXIT\n"
-             << endl;
-        cout << "Input: ";
-        cin >> choice;
-
-        switch (choice)
-        {
-        case 1:
-            cout << "SIGNUP" << endl;
-            if (auth.signup(1))
-            {
-                cout << "Your account has been created successfully" << endl;
-                system("pause");
-            }
-            break;
-        case 2:
-            cout << "LOGIN" << endl;
-        retry1:
-            if (auth.Login(1))
-            {
-                cout << "Login successfull" << endl;
-                system("pause");
-                flag = "admin";
-            }
-            else
-            {
-                cout << "Login failed" << endl;
-                system("pause");
-                goto retry1;
-            }
-            break;
-        }
-    }
-    // login for user
-    if (userchoice == 2)
-    {
-        int choice;
-        cout << "\n";
-        cout << "1. Create new account\t";
-        cout << "2. Login existing account\t\t";
-        cout << "0. EXIT\n"
-             << endl;
-        cout << "Input: ";
-        cin >> choice;
-
-        switch (choice)
-        {
-        case 1:
-            cout << "SIGNUP" << endl;
-            if (auth.signup(2))
-            {
-                cout << "Your account has been created successfully" << endl;
-                system("pause");
-            }
-            break;
-        case 2:
-            cout << "LOGIN" << endl;
-        retry2:
-            if (auth.Login(2))
-            {
-                cout << "Login successfull" << endl;
-                flag = "user";
-                system("pause");
-            }
-            else
-            {
-                cout << "Login failed" << endl;
-                system("pause");
-                goto retry2;
-            }
-            break;
-        }
+    if (userchoice == 1 || userchoice == 2) {
+        processUserChoice(userchoice);
+        flag = (userchoice == 1) ? "admin" : "user";
+    } else if (userchoice == 0) {
+    } else {
+        cout << "Invalid choice. Exiting..." << endl;
     }
 
     char option;
@@ -139,7 +63,7 @@ int main()
         case 5:
         retry5:
             tm.deleteTrain();
-                        cout << "Do you want to delete more?(y/n)";
+            cout << "Do you want to delete more?(y/n)";
             cin >> option;
             if (option == 'y' || option == 'Y')
             {
