@@ -1,3 +1,6 @@
+#ifndef ADMINISTRATION_H
+#define ADMINISTRATION_H
+
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -6,15 +9,16 @@ using namespace std;
 class TrainManagement
 {
 private:
-    string trainNumber, numberOfSeats, route, timing, fare;
+    string trainNumber, numberOfSeats, nameOfTrain, route, timing, fare;
     ofstream trainIn;
     ifstream trainOut;
     void trainData()
     {
         trainIn.open("TrainFile.txt", ios::in | ios::app);
         trainIn << "Train number: " << trainNumber << endl;
-        trainIn << "Number of seats: " << numberOfSeats << endl;
+        trainIn << "Name of train: " << nameOfTrain << endl;
         trainIn << "Route: " << route << endl;
+        trainIn << "Number of seats: " << numberOfSeats << endl;
         trainIn << "Timing: " << timing << endl;
         trainIn << "Fare: " << fare << endl;
         trainIn << "__________________________" << endl;
@@ -27,7 +31,11 @@ public:
         cout << "Enter train number: ";
         cin >> trainNumber;
 
-        cin.ignore(); // Ignore the newline character
+        cin.ignore();
+
+        cout << "Enter train name: ";
+        getline(cin, nameOfTrain);
+
         cout << "Enter route: ";
         getline(cin, route); 
 
@@ -51,7 +59,7 @@ public:
         }
         trainOut.close();
     }
-void searchTrain()
+string searchTrain()
 {
 retry1:
     trainOut.open("TrainFile.txt", ios::in);
@@ -59,6 +67,7 @@ retry1:
     cout << "Enter train number: ";
     cin >> search;
     string y;
+    string z;
     bool found = false;
 
     while (getline(trainOut, y))
@@ -66,6 +75,7 @@ retry1:
         if (y == ("Train number: " + search))
         {
             found = true;
+            getline(trainOut, z);
             while (getline(trainOut, y))
             {
                 cout << y << endl;
@@ -82,6 +92,7 @@ retry1:
         cout << "Train not found" << endl;
         goto retry1;
     }
+    return search + z.substr(14, z.length() - 14);
 }
     void deleteTrain()
     {
@@ -124,3 +135,5 @@ retry1:
         }
     }
 };
+
+#endif // ADMINISTRATION_H

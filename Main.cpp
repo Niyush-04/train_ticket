@@ -27,9 +27,11 @@ int main()
     }
 
     char option;
+TicketBooking tb;
+TrainManagement tm;
+// admin
     if (flag == "admin")
     {
-        TrainManagement tm;
     retry3:
         adminMenu();
         int choice;
@@ -57,8 +59,9 @@ int main()
             tm.searchTrain();
             break;
         case 4:
-            cout << "coming soon";
+            tb.viewBookings();
             system("pause");
+            goto retry3;
             break;
         case 5:
         retry5:
@@ -75,6 +78,50 @@ int main()
         case 0:
             exit(0);
         }
+    }
+//for user 
+        if (flag == "user")
+    {
+    retry6:
+        userMenu();
+        int choice;
+        cin >> choice;
+        switch (choice)
+        {
+        case 1:
+        tm.viewTrains();
+        system("pause");
+        goto retry6;
+            break;
+        case 2:
+        tm.searchTrain();
+            system("pause");
+            goto retry6;
+            break;
+        case 3:
+            tb.bookTicket();
+            system("pause");
+            goto retry6;
+            break;
+        case 4:
+            cout <<"coming soon";
+            system("pause");
+            goto retry6;
+            break;
+        case 5:
+            cout<<"coming soon";
+            system("pause");
+            goto retry6;
+            break;
+        case 6:
+            cout<<"coming soon";
+            system("pause");
+            goto retry6;
+            break;
+        case 0:
+            exit(0);
+        }
+        
     }
     return 0;
 }

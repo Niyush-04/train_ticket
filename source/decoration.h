@@ -27,10 +27,11 @@ void adminMenu(){
     cout << "\n----------------------------------MENU----------------------------------\n"
              << endl;
         cout << "1. Add Train\t\t\t";
-        cout << "2. Display\t\t\t\n\n";
+        cout << "2. Display Trains\t\t\t\n\n";
         cout << "3. Search Trains\t\t";
-        cout << "4. Update\t\t\t\n\n";
-        cout << "5. Delete Train\t\t\t";
+        cout << "4. Display Bookings\t\t";
+        cout << "5. Delete Train\t\t\t\n\n";
+        cout << "6. Update\t\t\t";
         cout << "0. Logout\t\t\t\n\n";
         cout << "---------------------------------------------------------------------------\n"
              << endl;
