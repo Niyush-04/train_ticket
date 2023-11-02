@@ -1,24 +1,22 @@
-#include "source/headers.h"
+#include "source/Authentication.h"
 #include "source/Administration.h"
 #include "source/decoration.h"
 #include "source/ticketBooking.h"
 
 int main()
 {
+    string flag;
+    int userchoice;
     loading();
     system("pause"); 
     printHeader();
-
-    cout << "Welcome to the Train Booking Ticket Service!\n"
-         << endl;
-    string flag;
-    int userchoice;
-    cout << "Login as a ..." << endl;
-    cout << "1.Admin\n";
-    cout << "2.User\n";
+    loginpage1();
     cin >> userchoice;
 
     if (userchoice == 1 || userchoice == 2) {
+        system("cls");
+        printHeader();
+        loginpage2();
         processUserChoice(userchoice);
         flag = (userchoice == 1) ? "admin" : "user";
     } else if (userchoice == 0) {
@@ -33,6 +31,8 @@ TrainManagement tm;
     if (flag == "admin")
     {
     retry3:
+        printHeader();
+        printname();
         adminMenu();
         int choice;
         cin >> choice;
@@ -83,6 +83,8 @@ TrainManagement tm;
         if (flag == "user")
     {
     retry6:
+        printHeader();
+        printname();
         userMenu();
         int choice;
         cin >> choice;

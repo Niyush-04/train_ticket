@@ -4,6 +4,8 @@
 #include <stdlib.h>
 using namespace std;
 
+string Name;
+
 class Auth
 {
 private:
@@ -51,6 +53,7 @@ public:
         fin.open("login.txt", ios::in);
         cout << "Enter username:";
         cin >> username;
+        Name=username;
         cout << "Enter password:";
         cin >> password;
         string x;
@@ -86,26 +89,29 @@ public:
     }
 };
 
+void printname(){
+    cout<<"Hello "<<Name<<", Welcome back!"<<endl;
+}
+
 void processUserChoice(int userType) {
     Auth auth;
     int choice;
-    cout << "\n";
-    cout << "1. Create new account\t";
-    cout << "2. Login existing account\t\t";
-    cout << "0. EXIT\n" << endl;
-    cout << "Input: ";
     cin >> choice;
 
     switch (choice) {
         case 1:
-            cout << "SIGNUP" << endl;
+            cout << "                            -----SIGNUP-----"<<endl;
+            cout << "-------------------------------------------------------------------------" << endl;
+
             if (auth.signup(userType)) {
                 cout << "Your account has been created successfully" << endl;
                 system("pause");
+                exit(0);
             }
             break;
         case 2:
-            cout << "LOGIN" << endl;
+            cout << "                            -----LOGIN-----"<<endl;
+            cout << "-------------------------------------------------------------------------" << endl;
             string flag = (userType == 1) ? "admin" : "user";
             retryLogin:
             if (auth.Login(userType)) {
