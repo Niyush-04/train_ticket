@@ -106,7 +106,7 @@ TrainManagement tm;
             goto retry6;
             break;
         case 4:
-            cout <<"coming soon";
+            tb.searchBooking();
             system("pause");
             goto retry6;
             break;

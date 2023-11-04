@@ -37,14 +37,14 @@ public:
         getline(cin, nameOfTrain);
 
         cout << "Enter route: ";
-        getline(cin, route); 
+        getline(cin, route);
 
         cout << "Enter timings: ";
         cin >> timing;
-        
+
         cout << "Enter number of seats: ";
         cin >> numberOfSeats;
-        
+
         cout << "Enter fare: ";
         cin >> fare;
         trainData();
@@ -55,45 +55,46 @@ public:
         string x;
         while (getline(trainOut, x))
         {
-            cout<< x << endl;
+            cout << x << endl;
         }
         trainOut.close();
     }
-string searchTrain()
-{
-retry1:
-    trainOut.open("TrainFile.txt", ios::in);
-    string search;
-    cout << "Enter train number: ";
-    cin >> search;
-    string y;
-    string z;
-    bool found = false;
-
-    while (getline(trainOut, y))
+    string searchTrain()
     {
-        if (y == ("Train number: " + search))
+    retry1:
+        trainOut.open("TrainFile.txt", ios::in);
+        string search;
+        cout << "Enter train number: ";
+        cin >> search;
+        string y;
+        string z;
+        bool found = false;
+
+        while (getline(trainOut, y))
         {
-            found = true;
-            getline(trainOut, z);
-            while (getline(trainOut, y))
+            if (y == ("Train number: " + search))
             {
-                cout << y << endl;
-                if (y == "__________________________")
-                    break;
+                found = true;
+                getline(trainOut, z);
+                while (getline(trainOut, y))
+                {
+                    cout << y << endl;
+                    if (y == "__________________________")
+                        break;
+                }
             }
         }
+
+        trainOut.close();
+
+        if (!found)
+        {
+            cout << "Train not found" << endl;
+            goto retry1;
+        }
+        return search + z.substr(14, z.length() - 14);
     }
 
-    trainOut.close();
-
-    if (!found)
-    {
-        cout << "Train not found" << endl;
-        goto retry1;
-    }
-    return search + z.substr(14, z.length() - 14);
-}
     void deleteTrain()
     {
         ifstream trainIn("TrainFile.txt");
@@ -133,6 +134,45 @@ retry1:
             rename("TempFile.txt", "TrainFile.txt");
             cout << "Train deleted successfully." << endl;
         }
+    }
+    void seatBooked(string TrainNumber)
+    {
+        trainOut.open("TrainFile.txt", ios::in);
+        string old_seat, new_seat, y, seat;
+        int line = 0;
+        while (getline(trainOut, y))
+        {
+            if (y == ("Train number: " + TrainNumber))
+            {
+                while (getline(trainOut, y))
+                {
+                    line++;
+                    if (line == 3)
+                    {
+                        old_seat = y;
+                        seat = (to_string)(stoi(y.substr(17, y.length() - 17)) - 1);
+                        new_seat = "Number of seats: " + seat;
+                    }
+                }
+            }
+        }
+        trainOut.close();
+        update(old_seat, new_seat);
+    }
+
+    void update(string oldLine, string newLine)
+    {
+        ifstream trainIn("TrainFile.txt");
+        string line;
+        ofstream tempFile("TempFile.txt");
+
+        while (getline(trainIn, line))
+            (line == oldLine) ? tempFile << newLine << '\n' : tempFile << line << '\n';
+
+        trainIn.close();
+        tempFile.close();
+        remove("TrainFile.txt");
+        rename("TempFile.txt", "TrainFile.txt");
     }
 };
 
