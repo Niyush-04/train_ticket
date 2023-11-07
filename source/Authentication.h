@@ -14,7 +14,7 @@ private:
     ofstream fout;
 
 public:
-    bool signup(int type)
+    bool signup(string type)
     {
         fout.open("login.txt", ios::out | ios::app);
         fin.open("login.txt", ios::in);
@@ -22,7 +22,7 @@ public:
         cout << "Enter username:";
         cin >> username;
         string x;
-        while (fin >> x)
+        while (fin >> x) 
         {
             if (x == "Username:" + username)
             {
@@ -32,11 +32,11 @@ public:
         }
         cout << "Enter password:";
         cin >> password;
-        if (type == 1)
+        if (type == "1")
         {
             fout << "Type: admin" << endl;
         }
-        else if (type == 2)
+        else if (type == "2")
         {
             fout << "Type: user" << endl;
         }
@@ -48,7 +48,7 @@ public:
         return true;
     }
 
-    bool Login(int type)
+    bool Login(string type)
     {
         fin.open("login.txt", ios::in);
         cout << "Enter username:";
@@ -60,11 +60,11 @@ public:
         string userLine = "Username:" + username;
         string passLine = "Password:" + password;
         string typeLine;
-        if (type == 1)
+        if (type == "1")
         {
             typeLine = "Type: admin";
         }
-        else if (type == 2)
+        else if (type == "2")
         {
             typeLine = "Type: user";
         }
@@ -85,7 +85,6 @@ public:
             }
         }
         fin.close();
-        return false;
     }
 };
 
@@ -93,13 +92,13 @@ void printname(){
     cout<<"Hello "<<Name<<", Welcome back!"<<endl;
 }
 
-void processUserChoice(int userType) {
+void processUserChoice(string userType) {
     Auth auth;
-    int choice;
+    retry1:
+    string choice;
     cin >> choice;
 
-    switch (choice) {
-        case 1:
+    if(choice == "1"){
             cout << "                            -----SIGNUP-----"<<endl;
             cout << "-------------------------------------------------------------------------" << endl;
 
@@ -108,22 +107,29 @@ void processUserChoice(int userType) {
                 system("pause");
                 exit(0);
             }
-            break;
-        case 2:
+    }
+    else if(choice == "2"){
             cout << "                            -----LOGIN-----"<<endl;
             cout << "-------------------------------------------------------------------------" << endl;
-            string flag = (userType == 1) ? "admin" : "user";
             retryLogin:
             if (auth.Login(userType)) {
                 cout << "Login successful" << endl;
                 system("pause");
-                flag = (userType == 1) ? "admin" : "user";
             } else {
                 cout << "Login failed" << endl;
                 system("pause");
                 goto retryLogin;
             }
-            break;
+    }
+    else if(choice == "0"){
+        cout<<"Thanks for reaching out !!";
+        exit(0);
+    }
+    else{
+        cout<<"Invalid input"<<endl;
+       system("pause");
+       cout<<"\nSelect an option: ";
+        goto retry1;
     }
 }
 
