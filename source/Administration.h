@@ -63,11 +63,9 @@ public:
     {
     retry1:
         trainOut.open("TrainFile.txt", ios::in);
-        string search;
+        string search, y, z;
         cout << "Enter train number: ";
         cin >> search;
-        string y;
-        string z;
         bool found = false;
 
         while (getline(trainOut, y))
@@ -76,6 +74,7 @@ public:
             {
                 found = true;
                 getline(trainOut, z);
+                cout << "\n" << z << endl;
                 while (getline(trainOut, y))
                 {
                     cout << y << endl;
@@ -90,9 +89,11 @@ public:
         if (!found)
         {
             cout << "Train not found" << endl;
-            goto retry1;
-        }
+        } 
+        else {
         return search + z.substr(14, z.length() - 14);
+        }
+        return "";
     }
 
     void deleteTrain()

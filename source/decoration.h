@@ -1,5 +1,6 @@
+#ifndef DECORATION_H
+#define DECORATION_H
 #include <iostream>
-
 using namespace std;
 
 // ANSI color codes
@@ -20,7 +21,7 @@ void loading() {
     cout << "___________|||______________________________|______________/" << endl;
     cout << "           |||                                        /--------" << endl;
     cout << "-----------'''---------------------------------------'" << RESET << endl;
-    cout << BOLD << YELLOW << "Welcome to the Train Booking System!" << endl;
+    cout << BOLD << YELLOW << "          Welcome to the Train Booking System!" << endl << endl;
     cout << "Please log in to access your account and book your train tickets." << endl;
     cout << "If you don't have an account yet, you can sign up to create one." << endl;
     cout << "We're here to make your train travel convenient and enjoyable." << endl;
@@ -32,7 +33,7 @@ void printHeader() {
     cout << CYAN << "-------------------------------------------------------------------------" << endl;
     cout << BOLD << "                  -----TRAIN BOOKING TICKET SERVICE----- " << endl;
     cout << "-------------------------------------------------------------------------" << RESET << endl << endl;
-    cout << YELLOW << "Welcome to our Train Booking System. Please log in to start your journey\nwith us!" << RESET << endl << endl;
+    cout << YELLOW << "Welcome to our Train Booking System. Begin your journey with us!" << RESET << endl << endl;
 }
 
 void adminMenu() {
@@ -80,3 +81,5 @@ void loginpage2() {
     cout << CYAN << "-------------------------------------------------------------------------" << endl;
     cout << "Select an option: ";
 }
+
+#endif

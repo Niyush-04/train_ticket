@@ -1,5 +1,4 @@
 #include "source/Authentication.h"
-#include "source/decoration.h"
 #include "source/ticketBooking.h"
 
 int main()
@@ -7,7 +6,7 @@ int main()
     TicketBooking tb;
     TrainManagement tm;
     string flag;
-    string userchoice;
+    char userchoice;
     loading();
     system("pause");
     loginpage1:
@@ -15,15 +14,15 @@ int main()
     loginpage1();
     cin >> userchoice;
 
-    if (userchoice == "1" || userchoice == "2")
+    if (userchoice == '1' || userchoice == '2')
     {
         system("cls");
         printHeader();
         loginpage2();
         processUserChoice(userchoice);
-        flag = (userchoice == "1") ? "admin" : "user";
+        flag = (userchoice == '1') ? "admin" : "user";
     }
-    else if (userchoice == "0")
+    else if (userchoice == '0')
     {
         exit(0);
     }
@@ -40,11 +39,11 @@ int main()
         printHeader();
         printname();
         adminMenu();
-        int choice;
+        char choice;
         cin >> choice;
         switch (choice)
         {
-        case 1:
+        case '1': //add train
         retry4:
             tm.addNewTrain();
             char option;
@@ -57,20 +56,22 @@ int main()
             else
                 goto retry3;
             break;
-        case 2:
+        case '2': //display train
             tm.viewTrains();
             system("pause");
             goto retry3;
             break;
-        case 3:
+        case '3': //search train
             tm.searchTrain();
+            system("pause");
+            goto retry3;
             break;
-        case 4:
+        case '4': //display bookings
             tb.viewBookings();
             system("pause");
             goto retry3;
             break;
-        case 5:
+        case '5': //delete train
         retry5:
             tm.deleteTrain();
             cout << "Do you want to delete more?(y/n)";
@@ -82,8 +83,16 @@ int main()
             else
                 goto retry3;
             break;
-        case 0:
+        case '6': //update train
+            cout << "coming soon";
+            system("pause");
+            goto retry3;
+        case '0': //logout
             exit(0);
+        default:
+            cout << "Invalid choice...." << endl;
+            system("pause");
+            goto retry3;
         }
     }
     // for user
@@ -93,42 +102,46 @@ int main()
         printHeader();
         printname();
         userMenu();
-        int choice;
+        char choice;
         cin >> choice;
         switch (choice)
         {
-        case 1:
+        case '1': //display train
             tm.viewTrains();
             system("pause");
             goto retry6;
             break;
-        case 2:
+        case '2': //search train
             tm.searchTrain();
             system("pause");
             goto retry6;
             break;
-        case 3:
+        case '3': //book ticket
             tb.bookTicket();
             system("pause");
             goto retry6;
             break;
-        case 4:
+        case '4': //print ticket
             tb.searchBooking();
             system("pause");
             goto retry6;
             break;
-        case 5:
+        case '5': //change password
             cout << "coming soon";
             system("pause");
             goto retry6;
             break;
-        case 6:
+        case '6': //cancel ticket
             cout << "coming soon";
             system("pause");
             goto retry6;
             break;
-        case 0:
+        case '0': //logout
             exit(0);
+        default:
+            cout << "Invalid choice...." << endl;
+            system("pause");
+            goto retry6;
         }
     }
     return 0;

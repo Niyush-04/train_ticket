@@ -1,8 +1,7 @@
-#include <iostream>
 #include <fstream>
 #include <string>
 #include <stdlib.h>
-using namespace std;
+#include "decoration.h"
 
 string Name;
 
@@ -14,12 +13,12 @@ private:
     ofstream fout;
 
 public:
-    bool signup(string type)
+    bool signup(char type)
     {
         fout.open("login.txt", ios::out | ios::app);
         fin.open("login.txt", ios::in);
     label:
-        cout << "Enter username:";
+        cout << "\nEnter username: ";
         cin >> username;
         string x;
         while (fin >> x) 
@@ -30,13 +29,13 @@ public:
                 goto label;
             }
         }
-        cout << "Enter password:";
+        cout << "\nEnter password: ";
         cin >> password;
-        if (type == "1")
+        if (type == '1')
         {
             fout << "Type: admin" << endl;
         }
-        else if (type == "2")
+        else if (type == '2')
         {
             fout << "Type: user" << endl;
         }
@@ -48,23 +47,23 @@ public:
         return true;
     }
 
-    bool Login(string type)
+    bool Login(char type)
     {
         fin.open("login.txt", ios::in);
-        cout << "Enter username:";
+        cout << "\nEnter username: ";
         cin >> username;
         Name=username;
-        cout << "Enter password:";
+        cout << "\nEnter password: ";
         cin >> password;
         string x;
         string userLine = "Username:" + username;
         string passLine = "Password:" + password;
         string typeLine;
-        if (type == "1")
+        if (type == '1')
         {
             typeLine = "Type: admin";
         }
-        else if (type == "2")
+        else if (type == '2')
         {
             typeLine = "Type: user";
         }
@@ -92,13 +91,13 @@ void printname(){
     cout<<"Hello "<<Name<<", Welcome back!"<<endl;
 }
 
-void processUserChoice(string userType) {
+void processUserChoice(char userType) {
     Auth auth;
     retry1:
-    string choice;
+    char choice;
     cin >> choice;
-
-    if(choice == "1"){
+    printHeader();
+    if(choice == '1'){
             cout << "                            -----SIGNUP-----"<<endl;
             cout << "-------------------------------------------------------------------------" << endl;
 
@@ -108,7 +107,7 @@ void processUserChoice(string userType) {
                 exit(0);
             }
     }
-    else if(choice == "2"){
+    else if(choice == '2'){
             cout << "                            -----LOGIN-----"<<endl;
             cout << "-------------------------------------------------------------------------" << endl;
             retryLogin:
@@ -121,7 +120,7 @@ void processUserChoice(string userType) {
                 goto retryLogin;
             }
     }
-    else if(choice == "0"){
+    else if(choice == '0'){
         cout<<"Thanks for reaching out !!";
         exit(0);
     }
