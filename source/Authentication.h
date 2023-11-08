@@ -102,7 +102,7 @@ void processUserChoice(char userType) {
             cout << "-------------------------------------------------------------------------" << endl;
 
             if (auth.signup(userType)) {
-                cout << "Your account has been created successfully" << endl;
+                cout << "\n\t\tYour account has been created successfully....\n" << endl;
                 system("pause");
                 exit(0);
             }
@@ -112,7 +112,7 @@ void processUserChoice(char userType) {
             cout << "-------------------------------------------------------------------------" << endl;
             retryLogin:
             if (auth.Login(userType)) {
-                cout << "Login successful" << endl;
+                cout << "\n\t\t\tLogin successful....\n" << endl;
                 system("pause");
             } else {
                 cout << "Login failed" << endl;

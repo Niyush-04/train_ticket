@@ -28,7 +28,7 @@ private:
 public:
     void addNewTrain()
     {
-        cout << "Enter train number: ";
+        cout << "Enter train number(4 digits): ";
         cin >> trainNumber;
 
         cin.ignore();
@@ -39,7 +39,7 @@ public:
         cout << "Enter route: ";
         getline(cin, route);
 
-        cout << "Enter timings: ";
+        cout << "Enter timings(eg. 6:00pm-7:00am): ";
         cin >> timing;
 
         cout << "Enter number of seats: ";
@@ -89,11 +89,11 @@ public:
         if (!found)
         {
             cout << "Train not found" << endl;
+            return "";
         } 
         else {
         return search + z.substr(14, z.length() - 14);
         }
-        return "";
     }
 
     void deleteTrain()
@@ -136,7 +136,7 @@ public:
             cout << "Train deleted successfully." << endl;
         }
     }
-    void seatBooked(string TrainNumber)
+    void seatBooked(string TrainNumber, int numberOfPassenger)
     {
         trainOut.open("TrainFile.txt", ios::in);
         string old_seat, new_seat, y, seat;
@@ -151,7 +151,7 @@ public:
                     if (line == 3)
                     {
                         old_seat = y;
-                        seat = (to_string)(stoi(y.substr(17, y.length() - 17)) - 1);
+                        seat = (to_string)(stoi(y.substr(17, y.length() - 17)) - numberOfPassenger);
                         new_seat = "Number of seats: " + seat;
                     }
                 }
@@ -159,6 +159,28 @@ public:
         }
         trainOut.close();
         update(old_seat, new_seat);
+    }
+
+    int getFare(string TrainNumber)
+    {
+        trainOut.open("TrainFile.txt", ios::in);
+        string y;
+        int line = 0;
+        while (getline(trainOut, y))
+        {
+            if (y == ("Train number: " + TrainNumber))
+            {
+                while (getline(trainOut, y))
+                {
+                    line++;
+                    if (line == 5)
+                    {
+                        trainOut.close();
+                        return stoi(y.substr(5, y.length() - 5));
+                    }
+                }
+            }
+        }
     }
 
     void update(string oldLine, string newLine)

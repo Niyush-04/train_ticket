@@ -82,4 +82,37 @@ void loginpage2() {
     cout << "Select an option: ";
 }
 
+void seatNumberShow() {
+    system("cls");
+    cout <<"-------------------------------------------------------------------------" << endl;
+    cout << "                         -----SEAT NUMBER-----" << endl;
+    cout << "-------------------------------------------------------------------------" << endl;
+    cout << "SL         SU          LB          MB          UB" << endl << endl;
+    cout << "01         02          03          04          05"<< endl;
+    cout << "06         07          08          09          10" << endl;
+    cout << "11         12          13          14          15" << endl;
+    cout << "16         17          18          19          20" << endl;
+    cout << "21         22          23          24          25" << endl;
+    cout << "26         27          28          29          30" << endl;
+    cout << "31         32          33          34          35" << endl;
+    cout << "36         37          38          39          40" << endl;
+    cout << "41         42          43          44          45" << endl;
+    cout << "46         47          48          49          50" << endl;
+    cout << "51         52          53          54          55" << endl << endl;
+    cout << "Choose the seat number: ";
+}
+
+void paymentPage(int amount) {
+    cout << CYAN << "-------------------------------------------------------------------------" << endl;
+    cout << BOLD << "                         -----PAYMENT PAGE-----" << endl;
+    cout << "-------------------------------------------------------------------------" << RESET << endl << endl;
+    cout << BOLD << "Total Amount is Rs. "<< amount<< endl << endl;
+    cout << "Choose the mode of payment ... " << endl << endl;
+    cout << GREEN << "1. Cash\n\n";
+    cout << "2. Card\n\n";
+    cout << "3. UPI\n\n" << RESET;
+    cout << CYAN << "-------------------------------------------------------------------------" << endl;
+    cout << "Select an option: ";
+}
+
 #endif
