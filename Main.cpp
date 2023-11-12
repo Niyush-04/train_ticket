@@ -5,6 +5,7 @@ int main()
 {
     TicketBooking tb;
     TrainManagement tm;
+    Auth log;
     string flag;
     char userchoice;
     loading();
@@ -127,12 +128,20 @@ int main()
             goto retry6;
             break;
         case '5': //change password
-            cout << "coming soon";
-            system("pause");
-            goto retry6;
+            bool flag;
+            flag = changePassword();
+            if(flag) {
+                cout << "\n\t\tPassword changed successfully" << endl << endl;
+                cout << "\t\tLogin again ..." << endl <<endl;
+                exit(0);
+            }else {
+                cout << "Password not changed" << endl;
+                system("pause");
+                goto retry6;
+            }
             break;
         case '6': //cancel ticket
-            cout << "coming soon";
+            tb.cancelTicket();
             system("pause");
             goto retry6;
             break;

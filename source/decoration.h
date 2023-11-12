@@ -115,4 +115,19 @@ void paymentPage(int amount) {
     cout << "Select an option: ";
 }
 
+void passwordMenu(){
+    system("cls");
+    cout << CYAN << "-------------------------------------------------------------------------" << endl;
+    cout << BOLD << "                         -----CHANGE PASSWORD-----" << endl;
+    cout << "-------------------------------------------------------------------------" << RESET << endl << endl;
+    cout << "Enter your old password: ";
+    // cin >> oldPassword;
+    // if(oldPassword == password){
+    //     cout << "Enter your new password: "<<;
+    //     cin >> newPassword;
+    //     password = newPassword;
+    //     cout << "Password changed successfully." << endl;
+    // }
+}
+
 #endif

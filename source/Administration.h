@@ -4,14 +4,17 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+
 using namespace std;
 
 class TrainManagement
 {
 private:
-    string trainNumber, numberOfSeats, nameOfTrain, route, timing, fare;
+    string trainNumber, numberOfSeats, nameOfTrain, route, timing, fare, line, y;
+
     ofstream trainIn;
     ifstream trainOut;
+
     void trainData()
     {
         trainIn.open("TrainFile.txt", ios::in | ios::app);
@@ -28,7 +31,7 @@ private:
 public:
     void addNewTrain()
     {
-        cout << "Enter train number(4 digits): ";
+        cout << "Enter train number (4 digits): ";
         cin >> trainNumber;
 
         cin.ignore();
@@ -39,7 +42,7 @@ public:
         cout << "Enter route: ";
         getline(cin, route);
 
-        cout << "Enter timings(eg. 6:00pm-7:00am): ";
+        cout << "Enter timings (eg. 6:00pm-7:00am): ";
         cin >> timing;
 
         cout << "Enter number of seats: ";
@@ -47,8 +50,10 @@ public:
 
         cout << "Enter fare: ";
         cin >> fare;
+
         trainData();
     }
+
     void viewTrains()
     {
         trainOut.open("TrainFile.txt", ios::out);
@@ -59,26 +64,26 @@ public:
         }
         trainOut.close();
     }
+
     string searchTrain()
     {
     retry1:
         trainOut.open("TrainFile.txt", ios::in);
-        string search, y, z;
         cout << "Enter train number: ";
-        cin >> search;
+        cin >> trainNumber;
         bool found = false;
 
-        while (getline(trainOut, y))
+        while (getline(trainOut, line))
         {
-            if (y == ("Train number: " + search))
+            if (line == ("Train number: " + trainNumber))
             {
                 found = true;
-                getline(trainOut, z);
-                cout << "\n" << z << endl;
-                while (getline(trainOut, y))
+                getline(trainOut, y);
+                cout << "\n" << y << endl;
+                while (getline(trainOut, line))
                 {
-                    cout << y << endl;
-                    if (y == "__________________________")
+                    cout << line << endl;
+                    if (line == "__________________________")
                         break;
                 }
             }
@@ -89,27 +94,27 @@ public:
         if (!found)
         {
             cout << "Train not found" << endl;
-            return "";
-        } 
-        else {
-        return search + z.substr(14, z.length() - 14);
+            system("pause");
+            goto retry1;
+        }
+        else
+        {
+            return trainNumber + y.substr(14, y.length() - 14);
         }
     }
 
     void deleteTrain()
     {
         ifstream trainIn("TrainFile.txt");
-        string search;
         cout << "Enter train number: ";
-        cin >> search;
+        cin >> trainNumber;
 
-        string line;
         ofstream tempFile("TempFile.txt");
 
         bool found = false;
         while (getline(trainIn, line))
         {
-            if (line == "Train number: " + search)
+            if (line == "Train number: " + trainNumber)
             {
                 found = true;
                 while (getline(trainIn, line))
@@ -136,11 +141,13 @@ public:
             cout << "Train deleted successfully." << endl;
         }
     }
-    void seatBooked(string TrainNumber, int numberOfPassenger)
+
+    void seatBooked(string TrainNumber, int numberOfPassengerOnBooking, int numberOfPassengerOnCancelling)
     {
         trainOut.open("TrainFile.txt", ios::in);
-        string old_seat, new_seat, y, seat;
+        string old_seat, new_seat;
         int line = 0;
+
         while (getline(trainOut, y))
         {
             if (y == ("Train number: " + TrainNumber))
@@ -151,8 +158,8 @@ public:
                     if (line == 3)
                     {
                         old_seat = y;
-                        seat = (to_string)(stoi(y.substr(17, y.length() - 17)) - numberOfPassenger);
-                        new_seat = "Number of seats: " + seat;
+                        numberOfSeats = to_string(stoi(y.substr(17, y.length() - 17)) - numberOfPassengerOnBooking + numberOfPassengerOnCancelling);
+                        new_seat = "Number of seats: " + numberOfSeats;
                     }
                 }
             }
@@ -164,8 +171,8 @@ public:
     int getFare(string TrainNumber)
     {
         trainOut.open("TrainFile.txt", ios::in);
-        string y;
         int line = 0;
+
         while (getline(trainOut, y))
         {
             if (y == ("Train number: " + TrainNumber))
@@ -182,11 +189,10 @@ public:
             }
         }
     }
-
+    
     void update(string oldLine, string newLine)
     {
         ifstream trainIn("TrainFile.txt");
-        string line;
         ofstream tempFile("TempFile.txt");
 
         while (getline(trainIn, line))

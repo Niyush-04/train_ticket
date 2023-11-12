@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include "decoration.h"
 
-string Name;
+string Name, tempPassword;
 
 class Auth
 {
@@ -21,7 +21,7 @@ public:
         cout << "\nEnter username: ";
         cin >> username;
         string x;
-        while (fin >> x) 
+        while (fin >> x)
         {
             if (x == "Username:" + username)
             {
@@ -52,9 +52,10 @@ public:
         fin.open("login.txt", ios::in);
         cout << "\nEnter username: ";
         cin >> username;
-        Name=username;
+        Name = username;
         cout << "\nEnter password: ";
         cin >> password;
+        tempPassword = password;
         string x;
         string userLine = "Username:" + username;
         string passLine = "Password:" + password;
@@ -87,48 +88,88 @@ public:
     }
 };
 
-void printname(){
-    cout<<"Hello "<<Name<<", Welcome back!"<<endl;
+void printname()
+{
+    cout << "Hello " << Name << ", Welcome back!" << endl;
 }
 
-void processUserChoice(char userType) {
+bool changePassword()
+{
+    passwordMenu();
+    string password;
+    cin >> password;
+
+    if (password == tempPassword)
+    {
+        cout << "\nEnter new password: ";
+        cin >> password;
+        string line;
+        ifstream fin("login.txt");
+        ofstream fout("TempFile.txt");
+
+        while (getline(fin, line))
+            (line == "Password:" + tempPassword) ? fout << "Password:" + password << endl : fout << line << endl;
+
+        fin.close();
+        fout.close();
+        remove("login.txt");
+        rename("TempFile.txt", "login.txt");
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
+void processUserChoice(char userType)
+{
     Auth auth;
-    retry1:
+retry1:
     char choice;
     cin >> choice;
     printHeader();
-    if(choice == '1'){
-            cout << "                            -----SIGNUP-----"<<endl;
-            cout << "-------------------------------------------------------------------------" << endl;
+    if (choice == '1')
+    {
+        cout << "                            -----SIGNUP-----" << endl;
+        cout << "-------------------------------------------------------------------------" << endl;
 
-            if (auth.signup(userType)) {
-                cout << "\n\t\tYour account has been created successfully....\n" << endl;
-                system("pause");
-                exit(0);
-            }
+        if (auth.signup(userType))
+        {
+            cout << "\n\t\tYour account has been created successfully....\n"
+                 << endl;
+            system("pause");
+            exit(0);
+        }
     }
-    else if(choice == '2'){
-            cout << "                            -----LOGIN-----"<<endl;
-            cout << "-------------------------------------------------------------------------" << endl;
-            retryLogin:
-            if (auth.Login(userType)) {
-                cout << "\n\t\t\tLogin successful....\n" << endl;
-                system("pause");
-            } else {
-                cout << "Login failed" << endl;
-                system("pause");
-                goto retryLogin;
-            }
+    else if (choice == '2')
+    {
+        cout << "                            -----LOGIN-----" << endl;
+        cout << "-------------------------------------------------------------------------" << endl;
+    retryLogin:
+        if (auth.Login(userType))
+        {
+            cout << "\n\t\t\tLogin successful....\n"
+                 << endl;
+            system("pause");
+        }
+        else
+        {
+            cout << "Login failed" << endl;
+            system("pause");
+            goto retryLogin;
+        }
     }
-    else if(choice == '0'){
-        cout<<"Thanks for reaching out !!";
+    else if (choice == '0')
+    {
+        cout << "Thanks for reaching out !!";
         exit(0);
     }
-    else{
-        cout<<"Invalid input"<<endl;
-       system("pause");
-       cout<<"\nSelect an option: ";
+    else
+    {
+        cout << "Invalid input" << endl;
+        system("pause");
+        cout << "\nSelect an option: ";
         goto retry1;
     }
 }
-
