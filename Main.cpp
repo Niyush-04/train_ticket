@@ -5,7 +5,6 @@ int main()
 {
     TicketBooking tb;
     TrainManagement tm;
-    Auth log;
     string flag;
     char userchoice;
     loading();
@@ -45,7 +44,8 @@ int main()
         switch (choice)
         {
         case '1': //add train
-        retry4:
+        {
+            retry4:
             tm.addNewTrain();
             char option;
             cout << "Do you want to add more?(y/n)";
@@ -57,25 +57,34 @@ int main()
             else
                 goto retry3;
             break;
+        }
         case '2': //display train
+        {    
             tm.viewTrains();
             system("pause");
             goto retry3;
             break;
+        }
         case '3': //search train
+        {
             tm.searchTrain();
             system("pause");
             goto retry3;
             break;
+        }
         case '4': //display bookings
+        {
             tb.viewBookings();
             system("pause");
             goto retry3;
             break;
+        }
         case '5': //delete train
+        {
         retry5:
             tm.deleteTrain();
             cout << "Do you want to delete more?(y/n)";
+            char option;
             cin >> option;
             if (option == 'y' || option == 'Y')
             {
@@ -84,16 +93,53 @@ int main()
             else
                 goto retry3;
             break;
+        }    
         case '6': //update train
-            cout << "coming soon";
+        {
+            updateTrain ut;
+            ut.dataUpdate();
             system("pause");
+            updateTrainMenu();
+            char subChoice;
+            cin>>subChoice;
+
+            if(subChoice == '1') {
+                ut.updateTrainNumber();
+                system("pause");
+            }
+            else if(subChoice == '2') {
+                ut.updateTrainName();
+                system("pause");
+            }
+            else if(subChoice == '3') {
+                ut.updateTrainRoute();
+                system("pause");
+            }
+            else if(subChoice == '4') {
+                ut.updateTrainNumberOfSeats();
+                system("pause");
+            }
+            else if(subChoice == '5') {
+                ut.updateTrainFare();
+                system("pause");
+            }
+            else if(subChoice == '0') {
+                goto retry3;
+            }
+            else {
+                cout << "Invalid choice...." << endl;
+                system("pause");
+            }
             goto retry3;
+        }    
         case '0': //logout
             exit(0);
         default:
+        {
             cout << "Invalid choice...." << endl;
             system("pause");
             goto retry3;
+        }
         }
     }
     // for user

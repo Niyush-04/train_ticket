@@ -121,13 +121,21 @@ void passwordMenu(){
     cout << BOLD << "                         -----CHANGE PASSWORD-----" << endl;
     cout << "-------------------------------------------------------------------------" << RESET << endl << endl;
     cout << "Enter your old password: ";
-    // cin >> oldPassword;
-    // if(oldPassword == password){
-    //     cout << "Enter your new password: "<<;
-    //     cin >> newPassword;
-    //     password = newPassword;
-    //     cout << "Password changed successfully." << endl;
-    // }
+}
+
+void updateTrainMenu() {
+    system("cls");
+    cout << CYAN << "-------------------------------------------------------------------------" << endl;
+    cout << BOLD << "                         -----UPDATE TRAIN-----" << endl;
+    cout << "-------------------------------------------------------------------------" << RESET << endl << endl;
+    cout << "What do you want to update?" << endl << endl;
+
+    cout << GREEN << "1. Train Number                                    2. Train Name\n\n";
+    cout << "3. Train Route                                     4. Number of Seats\n\n";
+    cout << "5. Train Time                                      6. Fare\n\n";
+    cout << "0. Return to Main menu\n\n" << RESET;
+    cout << CYAN << "-------------------------------------------------------------------------" << endl;
+    cout << "Select an option: ";
 }
 
 #endif

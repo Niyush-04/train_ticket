@@ -9,9 +9,9 @@ using namespace std;
 
 class TrainManagement
 {
-private:
-    string trainNumber, numberOfSeats, nameOfTrain, route, timing, fare, line, y;
-
+public:
+    string trainNumber, trainName, trainRoute, numberOfSeats, trainTime, trainFare, line, y;
+    // line & y are used to store the data temporarily
     ofstream trainIn;
     ifstream trainOut;
 
@@ -19,16 +19,15 @@ private:
     {
         trainIn.open("TrainFile.txt", ios::in | ios::app);
         trainIn << "Train number: " << trainNumber << endl;
-        trainIn << "Name of train: " << nameOfTrain << endl;
-        trainIn << "Route: " << route << endl;
+        trainIn << "Name of train: " << trainName << endl;
+        trainIn << "Route: " << trainRoute << endl;
         trainIn << "Number of seats: " << numberOfSeats << endl;
-        trainIn << "Timing: " << timing << endl;
-        trainIn << "Fare: " << fare << endl;
+        trainIn << "Timing: " << trainTime << endl;
+        trainIn << "Fare: " << trainFare << endl;
         trainIn << "__________________________" << endl;
         trainIn.close();
     }
 
-public:
     void addNewTrain()
     {
         cout << "Enter train number (4 digits): ";
@@ -37,19 +36,19 @@ public:
         cin.ignore();
 
         cout << "Enter train name: ";
-        getline(cin, nameOfTrain);
+        getline(cin, trainName);
 
-        cout << "Enter route: ";
-        getline(cin, route);
+        cout << "Enter trainRoute: ";
+        getline(cin, trainRoute);
 
         cout << "Enter timings (eg. 6:00pm-7:00am): ";
-        cin >> timing;
+        cin >> trainTime;
 
         cout << "Enter number of seats: ";
         cin >> numberOfSeats;
 
         cout << "Enter fare: ";
-        cin >> fare;
+        cin >> trainFare;
 
         trainData();
     }
@@ -57,10 +56,9 @@ public:
     void viewTrains()
     {
         trainOut.open("TrainFile.txt", ios::out);
-        string x;
-        while (getline(trainOut, x))
+        while (getline(trainOut, y))
         {
-            cout << x << endl;
+            cout << y << endl;
         }
         trainOut.close();
     }
@@ -146,7 +144,7 @@ public:
     {
         trainOut.open("TrainFile.txt", ios::in);
         string old_seat, new_seat;
-        int line = 0;
+        int i = 0;
 
         while (getline(trainOut, y))
         {
@@ -154,8 +152,8 @@ public:
             {
                 while (getline(trainOut, y))
                 {
-                    line++;
-                    if (line == 3)
+                    i++;
+                    if (i == 3)
                     {
                         old_seat = y;
                         numberOfSeats = to_string(stoi(y.substr(17, y.length() - 17)) - numberOfPassengerOnBooking + numberOfPassengerOnCancelling);
@@ -171,7 +169,7 @@ public:
     int getFare(string TrainNumber)
     {
         trainOut.open("TrainFile.txt", ios::in);
-        int line = 0;
+        int i = 0;
 
         while (getline(trainOut, y))
         {
@@ -179,8 +177,8 @@ public:
             {
                 while (getline(trainOut, y))
                 {
-                    line++;
-                    if (line == 5)
+                    i++;
+                    if (i == 5)
                     {
                         trainOut.close();
                         return stoi(y.substr(5, y.length() - 5));
@@ -189,7 +187,6 @@ public:
             }
         }
     }
-    
     void update(string oldLine, string newLine)
     {
         ifstream trainIn("TrainFile.txt");
@@ -202,6 +199,94 @@ public:
         tempFile.close();
         remove("TrainFile.txt");
         rename("TempFile.txt", "TrainFile.txt");
+    }
+};
+
+class updateTrain : public TrainManagement
+{
+public:
+    void dataUpdate()
+    {
+        searchTrain();
+        trainOut.open("TrainFile.txt", ios::in);
+
+        while (getline(trainOut, y))
+        {
+            if (y == ("Train number: " + trainNumber))
+            {
+                trainNumber = y;
+
+                getline(trainOut, y);
+                trainName = y;
+
+                getline(trainOut, y);
+                trainRoute = y;
+
+                getline(trainOut, y);
+                numberOfSeats = y;
+
+                getline(trainOut, y);
+                trainTime = y;
+
+                getline(trainOut, y);
+                trainFare = y;
+            }
+        }
+        trainOut.close();
+    }
+
+    void updateTrainNumber()
+    {
+        string newTrainNumber;
+        cout << "Enter new train number: ";
+        cin >> newTrainNumber;
+        update(trainNumber, "Train number: " + newTrainNumber);
+    }
+
+    void updateTrainName()
+    {
+        string newTrainName;
+        cout << "Enter new train name: ";
+        cin.ignore();
+        getline(cin, newTrainName);
+        update(trainName, "Train name: " + newTrainName);
+        cout << "Train name updated successfully." << endl;
+    }
+
+    void updateTrainRoute()
+    {
+        string newTrainRoute;
+        cout << "Enter new train route: ";
+        getline(cin, newTrainRoute);
+        update(trainRoute, "Train route: " + newTrainRoute);
+        cout << "Train route updated successfully." << endl;
+    }
+
+    void updateTrainNumberOfSeats()
+    {
+        string newTrainNumberOfSeats;
+        cout << "Enter new number of seats: ";
+        cin >> newTrainNumberOfSeats;
+        update(numberOfSeats, "Number of seats: " + newTrainNumberOfSeats);
+        cout << "Number of seats updated successfully." << endl;
+    }
+
+    void updateTrainTime()
+    {
+        string newTrainTime;
+        cout << "Enter new time: ";
+        cin >> newTrainTime;
+        update(trainTime, "Time: " + newTrainTime);
+        cout << "Time updated successfully." << endl;
+    }
+
+    void updateTrainFare()
+    {
+        string newTrainFare;
+        cout << "Enter new fare: ";
+        cin >> newTrainFare;
+        update(trainFare, "Fare: " + newTrainFare);
+        cout << "Fare updated successfully." << endl;
     }
 };
 
