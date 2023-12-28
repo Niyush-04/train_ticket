@@ -30,9 +30,20 @@ public:
 
     void addNewTrain()
     {
+        addTrain:
         cout << "Enter train number (4 digits): ";
         cin >> trainNumber;
 
+        trainOut.open("TrainFile.txt", ios::in);
+        while (getline(trainOut, line))
+        {
+            if (line == ("Train number: " + trainNumber))
+            {
+                cout << "Train already exists" << endl;
+                trainOut.close();
+                goto addTrain;
+            }
+        }
         cin.ignore();
 
         cout << "Enter train name: ";
