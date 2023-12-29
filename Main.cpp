@@ -1,5 +1,6 @@
 #include "source/Authentication.h"
 #include "source/ticketBooking.h"
+#include "source/ticketGenerator.h"
 
 int main()
 {
@@ -169,7 +170,7 @@ int main()
             goto retry6;
             break;
         case '4': //print ticket
-            tb.searchBooking();
+            searchBooking();
             system("pause");
             goto retry6;
             break;

@@ -24,7 +24,7 @@ private:
 			fout << "Total number of passengers: " << numberOfPassenger << endl << endl;
 		}
 		fout << "Passenger name: " << nameOfPassenger << endl;
-		fout << "Gender: " << gender << "      Age: " << age << endl;
+		fout << "Gender: " << gender << "      Age:  " << age << endl;
 		fout << "Seat number: " << seat << endl;
 		if (userCount == numberOfPassenger)
 		{
@@ -75,29 +75,6 @@ public:
 		while (getline(fin, x))
 		{
 			cout << x << endl;
-		}
-		fin.close();
-	}
-	void searchBooking()
-	{
-		fin.open("Tickets.txt", ios::out);
-		string search;
-		cout << "Enter ticket inquiry number: ";
-		cin >> search;
-		string y;
-		while (getline(fin, y))
-		{
-			if (y == ("Ticket inquiry number: " + search))
-			{
-				while (getline(fin, y))
-				{
-					cout << y << endl;
-					if (y == "_________________________")
-					{
-						break;
-					}
-				}
-			}
 		}
 		fin.close();
 	}
